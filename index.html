@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<title>Improving the web without third-party cookies</title>
+<title>Third Party Cookies Must Be Removed</title>
 <script class="remove" src="https://www.w3.org/Tools/respec/respec-w3c">
 </script>
 <script class="remove">
@@ -11,6 +11,14 @@ var respecConfig = {
       name: "Amy Guy",
       url: "https://rhiaro.co.uk",
       company: "Digital Bazaar",
+    },
+    {
+      name: "Daniel Appelquist",
+      company: "W3C Invited Expert",
+    },
+    {
+      name: "Hadley Beeman",
+      company: "W3C Invited Expert",
     },
   ],
   group: "tag",
@@ -30,7 +38,7 @@ var respecConfig = {
 
 <section id="abstract">
 
-This finding discusses the deprecation of third-party (<abbr title="also known as">AKA</abbr> cross-site) cookies, the reasons for restricting them, and the challenges in removing them from the web platform. We highlight some use cases that depend on third-party cookies and offer some examples of designed-for-purpose technologies that can replace them. Specification authors are expected to ensure they do not undermine the benefits of removing third-party cookies when proposing new web platform technologies.
+Third-party (<abbr title="also known as">AKA</abbr> cross-site) cookies are harmful to the web, and must be removed from the web platform. This finding explains why they must be removed, and examines the challenges in removing them. We highlight some use cases that depend on third-party cookies and offer some examples of designed-for-purpose technologies that can replace them. Specification authors are expected to ensure they do not undermine the benefits of removing third-party cookies when proposing new web platform technologies.
 
 </section>
 
@@ -42,17 +50,17 @@ This document is an early draft and does not reflect the consensus of the TAG.
 
 We consider privacy a core design principle and differentiator for the web platform (see: [Ethical Web Principles](https://www.w3.org/TR/ethical-web-principles/#privacy), [Unsanctioned Web Tracking](https://www.w3.org/2001/tag/doc/unsanctioned-tracking/), [Private Browsing Modes](https://www.w3.org/2001/tag/doc/private-browsing-modes/), [Privacy Principles](https://www.w3.org/TR/privacy-principles/), [Security & Privacy Questionnaire](https://www.w3.org/TR/security-privacy-questionnaire/)).
 
-Many browsers are restricting or completely deprecating the use of of third-party cookies (see: [Webkit](https://webkit.org/blog/10218/full-third-party-cookie-blocking-and-more/), [Mozilla](https://blog.mozilla.org/en/mozilla/firefox-rolls-out-total-cookie-protection-by-default-to-all-users-worldwide/), [Chrome](https://blog.google/products/chrome/updated-timeline-privacy-sandbox-milestones/)).  The TAG supports efforts to deprecate third-party cookies, as this provides an opportunity to further improve the privacy preserving features of the web platform.
+Many browsers have restricted and/or deprecated third-party cookies (see: [Webkit](https://webkit.org/blog/10218/full-third-party-cookie-blocking-and-more/), [Mozilla](https://blog.mozilla.org/en/mozilla/firefox-rolls-out-total-cookie-protection-by-default-to-all-users-worldwide/). Unfortunately, [not all browsers have followed suit](https://privacysandbox.com/intl/en_us/news/privacy-sandbox-update/). The TAG calls for all browsers to drop support for third-party cookies, as this provides an opportunity to further improve the privacy preserving features of the web platform.
 
-Removing third-party cookies from the web platform is not without complications. There are use cases for third-party cookies that need to be preserved, and pitfalls we need to be careful to avoid while doing so. This document sets out some things that specification editors and implementors should be aware of in order to make sure we ultimately [leave the web better than we found it](https://www.w3.org/TR/design-principles/#leave-the-web-better) after third-party cookies are deprecated.
+Removing third-party cookies from the web platform is not without complications. There are use cases for third-party cookies that need to be preserved, and pitfalls we need to be careful to avoid while doing so. This document sets out some things that specification editors and implementors should be aware of in order to make sure we ultimately [leave the web better than we found it](https://www.w3.org/TR/design-principles/#leave-the-web-better) after third-party cookies are removed.
 
-## Why restrict third party cookies?
+## Why remove third party cookies?
 
 Cookies were [originally designed](https://www.rfc-editor.org/rfc/rfc2109.html) for recognizing repeat visitors to a website, but they were soon repurposed for use cases like: login and single sign-on; tracking state (like putting shopping choices into a cart); tracking to better target advertising; detecting fraud; measurement and attribution of ad clicks. Third party cookies (cookies set by someone other than the website being used) have introduced additional vectors for cookies to be used as a data collection mechanism across web sites. This increase in data collection and sharing about people using the web - often in a way that is opaque or incomprehensible to a web user - results in decreased individual and collective privacy.
 
 [Third-party cookies](https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-rfc6265bis-11#name-third-party-cookies) in particular are a key technology supporting tracking networks, which have been [identified as a major threat to privacy](https://httpwg.org/http-extensions/draft-ietf-httpbis-rfc6265bis.html#name-privacy-considerations). These tracking networks entail concentrating data in the hands of - and thus giving greater power to - intermediaries with a presence across many sites, away from the individual sites a person is actually visiting. This centralising effect has repercussions on innovation and accountability, beyond what is in scope for discussion here.
 
-We maintain that [security and privacy are essential](https://w3ctag.github.io/ethical-web-principles/#privacy) on an ethical web; a reduction in privacy also has implications for [freedom of expression](https://w3ctag.github.io/ethical-web-principles/#expression), [supporting healthy communities](https://w3ctag.github.io/ethical-web-principles/#community) and the [enhancement of individual control and power](https://w3ctag.github.io/ethical-web-principles/#control).
+We maintain that [security and privacy are essential](https://w3ctag.github.io/ethical-web-principles/#privacy) on the web; a reduction in privacy also has implications for [freedom of expression](https://w3ctag.github.io/ethical-web-principles/#expression), [supporting healthy communities](https://w3ctag.github.io/ethical-web-principles/#community) and the [enhancement of individual control and power](https://w3ctag.github.io/ethical-web-principles/#control).
 
 ## Use cases previously met by third-party cookies
 
@@ -62,15 +70,14 @@ Some recent good examples of the designed-for-purpose approach include:
 
 * [FedCM](https://github.com/w3ctag/design-reviews/issues/718). Third-party cookies have been used to support single sign-on. FedCM is a set of technologies built to support identity federation, without replicating all functionality of third-party cookies.
 * [CHIPS](https://github.com/w3ctag/design-reviews/issues/654). The goal of CHIPS is to allow state, without supporting correlation or tracking between web sites which don't know they are collaborating, for example, when embedding third-party services like customer service webchat.
-* [Fenced Frames](https://github.com/w3ctag/design-reviews/issues/735). This provides a new top-level browsing context which enables content from multiple parties to be embedded on a page, without the embedding site being able to communicate with the embedded site.
 
 In all cases, it is important to continually review how such proposals might interact with other emerging or proposed APIs. Be aware that a set of new technologies which carry minimal risk individually, could be used in combination for tracking or profiling of web users.
 
 ## Leaving the web better than we found it
 
-We support deprecating third-party cookies from the web platform, and we embrace the opportunity to improve the privacy features of the web. When we review new technologies to replace third-party cookies, we need to ensure that the replacements do not recreate the same pitfalls to privacy.
+We support removing third-party cookies from the web platform, and we embrace the opportunity to improve the privacy features of the web. When we review new technologies to replace third-party cookies, we need to ensure that the replacements do not recreate the same pitfalls to privacy.
 
-The TAG considers each new technology proposal *both* individually, *and* as they fit together with the web platform as a whole. The web must be cross-platform, so multi-stakeholder (in particular, multi-browser) support for privacy-related specifications is essential if they are going to achieve the goal of increasing privacy on the web. When we consider whether something makes the web platform better, we should be explicit about what the baseline for comparison is. Is a proposal better for privacy when compared to usage of third-party cookies? Or when compared with a web free from third-party cookies altogether? What about when some user agents restrict third-party cookies, but others do not?
+The TAG considers each new technology proposal *both* individually, *and* as they fit together with the web platform as a whole. The web must be cross-platform, so multi-implementer (multi-browser) support and developer support for privacy-related specifications is essential if they are going to achieve the goal of increasing privacy on the web. When we consider whether something makes the web platform better, we should be explicit about what the baseline for comparison is. Is a proposal better for privacy when compared to usage of third-party cookies? Or when compared with a web free from third-party cookies altogether? What about when some user agents restrict third-party cookies, but others do not?
 
 Many varied proposals are being incubated in W3C Community Groups (eg. [PATCG](https://patcg.github.io/), [Privacy CG](https://github.com/privacycg/), [WICG](https://wicg.io/)) as well as outside (eg. [Privacy Sandbox](https://www.privacysandbox.com/)), and in these incubation stages multi-stakeholder support, consensus, and possible timelines for standardization are uncertain, and far from guaranteed.
 
